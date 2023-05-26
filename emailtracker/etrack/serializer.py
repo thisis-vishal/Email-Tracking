@@ -4,6 +4,7 @@ class emailSerializer(serializers.Serializer):
     email=serializers.EmailField()
     subject=serializers.CharField(max_length=100)
     body=serializers.CharField(max_length=500)
+    html=serializers.html
 
 class postData(serializers.Serializer):
     class Meta:

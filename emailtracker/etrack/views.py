@@ -10,48 +10,42 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from decouple import config
 from .models import emailData
-# Create your views here.
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from rest_framework import status
+from PIL import Image
+from django.template import Context
+from django.template.loader import get_template
+# Create your views here
 
-class sendEmail(APIView):
-    def send_email(self,recipient_email, subject, message):
-        smtp_server = 'smtp.gmail.com'
-        smtp_port = 587
 
-        email = MIMEMultipart()
-        email['From'] = 'tt0367816@gmail.com'
-        email['To'] = recipient_email
-        email['Subject'] = subject
 
-        email.attach(MIMEText(message+f" http://127.0.0.1:8000/getTrack/{recipient_email}/{subject}", 'plain'))
-
-        with smtplib.SMTP(smtp_server,smtp_port) as server:
-            server.starttls() 
-            server.login(config('id'), config('apppass'))
-            server.send_message(email)
-
-    def post(self, request):
-        try:
-            serializer = emailSerializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.send_email(request.data['email'],request.data['subject'],request.data['body'])
-            return Response(serializer.data)
-        except:
-            return Response({'result':"wrong data passed"})
+class EmailAPI(APIView):
+    def get(self, request,*args, **kwargs):
+        target_user_email = request.data['recipient_list']
+        mail_template = get_template("mail.html")
+        context_data_is = dict()
+        context_data_is["image_url"] =   request.build_absolute_uri(("render_image"))
+        url_is = context_data_is["image_url"]
+        context_data_is['url_is']= url_is
+        html_detail = mail_template.render(context_data_is)
+        subject, from_email,to = request.data['subject'],  config('id'), [target_user_email]
         
-
-
-
-class getTrack(APIView):
-     def get(self,request,**kwargs):
-        try:
-            receivera = str(kwargs.get('email', None))
-            subjecta = str(kwargs.get('subject', None))
-            print(receivera,subjecta)
-            data = emailData(receiver=receivera,subject=subjecta,read='True')
-            data.save()
-            return Response("done")
-        except:
-            return Response({'result':"wrong data passed"})
+    
+        msg = EmailMultiAlternatives(subject, html_detail, from_email, to)
+        msg.content_subtype='html'
+        msg.send()
+        return Response({"success":True})
 
             
-          
+@api_view()
+def render_image(request):
+     if request.method =='PUT':
+        image= Image.new('RGB', (20, 20))
+        response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
+        user = emailData.objects.get(id = 1)
+        user.status = True
+        user.save()
+        image.save(response, "PNG")
+        return response
