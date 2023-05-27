@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-cvmko^vg@_6@(&8k7vl*dkq^_fep3cw$e#(4rd93%+m1eg@wq@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['email-tracking-five.vercel.app''127.0.0.1']
 
 
 # Application definition
