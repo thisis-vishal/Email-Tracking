@@ -9,7 +9,7 @@ class emailSerializer(serializers.Serializer):
 class postData(serializers.Serializer):
     class Meta:
         model = emailData
-        fields = ['receiver', 'subject', 'receiver']
+        fields = ['email', 'status' ,'id']
 
         def create(self, validated_data):
             instance = self.Meta.model(**validated_data)

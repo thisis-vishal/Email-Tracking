@@ -17,35 +17,47 @@ from rest_framework import status
 from PIL import Image
 from django.template import Context
 from django.template.loader import get_template
+import uuid
+from django.urls import reverse
 # Create your views here
 
+class SendTemplateMailView(APIView):
 
+    def post(self, request, *args, **kwargs):
+            print(request.data['recipient_list'])
+            user = emailData.objects.get(email = request.data['recipient_list'])
+            user.unique_code = uuid.uuid4()
+            user.save()
+            template = get_template("mail.html")
+            context_data = dict()
+            context_data["image_url"] = request.build_absolute_uri(("image_load"))
+            print(context_data['image_url'])
+            context_data['user']="Vishal"
+            url_is = context_data["image_url"]+"/"+str(user.unique_code)+"/"
+            context_data['url_is']= url_is
+            html_text = template.render(context_data)
+            email = user.email
+            subject, from_email, to = "pixel" , 'tt0367816@gmail.com',  [request.data['recipient_list']]
 
-class EmailAPI(APIView):
-    def get(self, request,*args, **kwargs):
-        target_user_email = request.data['recipient_list']
-        mail_template = get_template("mail.html")
-        context_data_is = dict()
-        context_data_is["image_url"] =   request.build_absolute_uri(("render_image"))
-        url_is = context_data_is["image_url"]
-        context_data_is['url_is']= url_is
-        html_detail = mail_template.render(context_data_is)
-        subject, from_email,to = request.data['subject'],  config('id'), [target_user_email]
-        
-    
-        msg = EmailMultiAlternatives(subject, html_detail, from_email, to)
-        msg.content_subtype='html'
-        msg.send()
-        return Response({"success":True})
-
+            msg = EmailMultiAlternatives(subject, html_text, from_email, to)
+            msg.attach_alternative(html_text, "text/html")
+            msg.content_subtype='html'
+            msg.send()
+            print("done", email)
             
+            return Response({"success":True})
+
+
 @api_view()
-def render_image(request):
-     if request.method =='PUT':
-        image= Image.new('RGB', (20, 20))
+def image_load(request, uuid_val):
+   
+    if request.method =='GET':
+        print("\nImage Loaded\n")
+        red = Image.new('RGB', (20, 20))
         response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
-        user = emailData.objects.get(id = 1)
+        user = emailData.objects.get(unique_code= uuid_val)
         user.status = True
         user.save()
-        image.save(response, "PNG")
+        red.save(response, "PNG")
+        print("hit")
         return response

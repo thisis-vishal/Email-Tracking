@@ -1,8 +1,14 @@
-from django.contrib import admin
 from django.urls import path , include
-from . import views
+from .views import SendTemplateMailView , image_load 
+from django.conf.urls.static import static
+from django.conf import settings
+
+
+
 
 urlpatterns = [
-    path('sendEmail',views.EmailAPI.as_view(),name='send_template'),
-    path('render_image/',views.render_image, name='render_image'),
+    
+    path('image_load/<str:uuid_val>/',image_load, name='image_load'),
+    
+    path('send', SendTemplateMailView.as_view(), name= 'send_template'),
 ]
