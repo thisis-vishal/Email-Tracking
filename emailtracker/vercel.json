@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "emailtracker/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "emailtracker/wsgi.py"
+      }
+    ]
+}

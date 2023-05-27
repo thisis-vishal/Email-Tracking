@@ -138,8 +138,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('id')
-EMAIL_HOST_PASSWORD =config('apppass')
+EMAIL_HOST_USER = os.getenv('id')
+EMAIL_HOST_PASSWORD =os.getenv('apppass')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 300 # in seconds
