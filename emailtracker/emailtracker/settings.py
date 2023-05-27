@@ -86,9 +86,15 @@ WSGI_APPLICATION = 'emailtracker.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+        'ENGINE': 'djongo',
+        "CLIENT": {
+        "host": "mongodb+srv://thisisvishal:Vishal9634@cluster0.b1vrwir.mongodb.net/?retryWrites=true&w=majority",
+        "username": "thisisvishal",
+        "password": "Vishal9634",
+        "name": "emailtrack",
+        "authMechanism": "SCRAM-SHA-1",
+        },
     }
 }
 
