@@ -89,7 +89,7 @@ DATABASES = {
         'default': {
         'ENGINE': 'djongo',
         "CLIENT": {
-        "host": "mongodb+srv://thisisvishal:Vishal9634@cluster0.b1vrwir.mongodb.net/?retryWrites=true&w=majority",
+        "host": f"mongodb+srv://{os.getenv('mongouserid')}:{os.getenv('mongopass')}@cluster0.b1vrwir.mongodb.net/?retryWrites=true&w=majority",
         "username": "thisisvishal",
         "password": "Vishal9634",
         "name": "emailtrack",
