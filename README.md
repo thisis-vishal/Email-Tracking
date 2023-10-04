@@ -1,5 +1,7 @@
 # Email-Tracking
 
+## Description
+
 This following API is used to track whether email has been opened by user or not. This can help various businesses to find out analytics of there email campaign
 
 This is an open to contribute project feel free to connect
