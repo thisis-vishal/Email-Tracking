@@ -90,8 +90,8 @@ DATABASES = {
         'ENGINE': 'djongo',
         "CLIENT": {
         "host": f"mongodb+srv://{os.getenv('mongouserid')}:{os.getenv('mongopass')}@cluster0.b1vrwir.mongodb.net/?retryWrites=true&w=majority",
-        "username": "thisisvishal",
-        "password": "Vishal9634",
+        "username": os.getenv('mongouserid'),
+        "password": os.getenv('mongopass'),
         "name": "emailtrack",
         "authMechanism": "SCRAM-SHA-1",
         },
