@@ -25,7 +25,11 @@ class SendTemplateMailView(APIView):
 
     def post(self, request, *args, **kwargs):
             print(request.data['recipient_list'])
-            user = emailData.objects.get(email = request.data['recipient_list'])
+            try:
+                emailData.objects.get(email = request.data['recipient_list'])
+                user=emailData.objects.get(email = request.data['recipient_list'])
+            except emailData.DoesNotExist:
+                user = emailData.objects.create(email = request.data['recipient_list'])
             user.unique_code = uuid.uuid4()
             user.save()
             template = get_template("mail.html")
