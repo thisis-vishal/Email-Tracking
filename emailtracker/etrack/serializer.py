@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import emailData
 class emailSerializer(serializers.Serializer):
-    email=serializers.EmailField()
+    email=serializers.ListField()
     subject=serializers.CharField(max_length=100)
     body=serializers.CharField(max_length=500)
     html=serializers.html

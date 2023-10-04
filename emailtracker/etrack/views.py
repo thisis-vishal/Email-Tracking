@@ -24,7 +24,6 @@ from django.urls import reverse
 class SendTemplateMailView(APIView):
 
     def post(self, request, *args, **kwargs):
-            print(request.data['recipient_list'])
             for i in request.data['recipient_list']:
                 try:
                     emailData.objects.get(email = i)
