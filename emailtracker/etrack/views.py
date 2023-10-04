@@ -41,7 +41,7 @@ class SendTemplateMailView(APIView):
                 context_data['url_is']= url_is
                 html_text = template.render(context_data)
                 email = user.email
-                subject, from_email, to = request.data['subject'], 'tt0367816@gmail.com',  [request.data['recipient_list']]
+                subject, from_email, to = request.data['subject'], 'tt0367816@gmail.com',  i
 
                 msg = EmailMultiAlternatives(subject, html_text, from_email, to)
                 msg.attach_alternative(html_text, "text/html")
