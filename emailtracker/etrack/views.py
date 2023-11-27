@@ -29,8 +29,7 @@ class SendTemplateMailView(APIView):
                 try:
                     user=emailData.objects.get(email = i)
                 except emailData.DoesNotExist:
-                    user = emailData.objects.create(email = i)
-                    user.date=datetime.datetime.today()
+                    user = emailData.objects.create(email = i)                
                 user.unique_code = uuid.uuid4()
                 user.save()
                 template = get_template("mail.html")
@@ -61,7 +60,8 @@ def image_load(request, uuid_val):
         red = Image.new('RGB', (20, 20))
         response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
         user = emailData.objects.get(unique_code= uuid_val)
-        
+        if user.status==0:
+            user.date=datetime.datetime.today()
         user.status=user.status+1
         user.save()
         red.save(response, "PNG")
