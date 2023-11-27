@@ -26,7 +26,6 @@ class SendTemplateMailView(APIView):
     def post(self, request, *args, **kwargs):
             for i in request.data['recipient_list']:
                 try:
-                    emailData.objects.get(email = i)
                     user=emailData.objects.get(email = i)
                 except emailData.DoesNotExist:
                     user = emailData.objects.create(email = i)
@@ -60,7 +59,8 @@ def image_load(request, uuid_val):
         red = Image.new('RGB', (20, 20))
         response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
         user = emailData.objects.get(unique_code= uuid_val)
-        user.status = True
+        
+        user.status
         user.save()
         red.save(response, "PNG")
         print("hit")
