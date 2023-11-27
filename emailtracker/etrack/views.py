@@ -60,7 +60,7 @@ def image_load(request, uuid_val):
         response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
         user = emailData.objects.get(unique_code= uuid_val)
         
-        user.status
+        user.status=user.status+1
         user.save()
         red.save(response, "PNG")
         print("hit")
