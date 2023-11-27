@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import json
+import datetime
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -29,6 +30,7 @@ class SendTemplateMailView(APIView):
                     user=emailData.objects.get(email = i)
                 except emailData.DoesNotExist:
                     user = emailData.objects.create(email = i)
+                    user.date=datetime.datetime.today()
                 user.unique_code = uuid.uuid4()
                 user.save()
                 template = get_template("mail.html")
