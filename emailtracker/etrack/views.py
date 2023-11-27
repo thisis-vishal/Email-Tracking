@@ -61,7 +61,7 @@ def image_load(request, uuid_val):
         response = HttpResponse(content_type="image/png" , status = status.HTTP_200_OK)
         user = emailData.objects.get(unique_code= uuid_val)
         if user.status==0:
-            user.date=datetime.datetime.today()
+            user.open_date=datetime.datetime.today()
         user.status=user.status+1
         user.save()
         red.save(response, "PNG")
