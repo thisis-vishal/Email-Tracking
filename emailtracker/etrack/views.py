@@ -19,6 +19,7 @@ from PIL import Image
 from django.template import Context
 from django.template.loader import get_template
 import uuid
+from bson.json_util import dumps, loads 
 from django.urls import reverse
 # Create your views here
 
@@ -54,9 +55,10 @@ class SendTemplateMailView(APIView):
 class getdata(APIView):
 
     def get(self,request):
-        data=emailData.objects.all()
+        data=list(emailData.objects.all())
+        realdata=dumps(data, indent = 2)  
         print(data)
-        return Response({"data":"abc"})
+        return Response({"data":realdata})
 
 
     
