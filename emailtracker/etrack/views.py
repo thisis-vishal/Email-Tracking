@@ -56,8 +56,9 @@ class getdata(APIView):
 
     def get(self,request):
         data=list(emailData.objects.all())
+        
         for x in data:
-            print(x)
+            print(x.json())
         print(data)
         return Response({"data":"realdata"})
 
