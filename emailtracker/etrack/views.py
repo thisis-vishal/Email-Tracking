@@ -54,8 +54,9 @@ class SendTemplateMailView(APIView):
 class getdata(APIView):
 
     def get(self,request):
-
-        return Response({"data":list(emailData.objects.get())})
+        data=emailData.objects.all()
+        print(data)
+        return Response({"data":"abc"})
 
 
     
