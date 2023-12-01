@@ -55,7 +55,7 @@ class getdata(APIView):
 
     def get(self,request):
 
-        return Response({"data":emailData.objects.get()})
+        return Response({"data":list(emailData.objects.get())})
 
 
     
