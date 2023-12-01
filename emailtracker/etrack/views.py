@@ -52,14 +52,13 @@ class SendTemplateMailView(APIView):
                 print("done", email)
             
             return Response({"success":True})
-    
+
+# api tp retrieve data
+
 class getdata(APIView):
 
     def get(self,request):
         data = serialize('json', emailData.objects.all())
-    
-            
-        print(data)
         return Response({"data":data})
 
 
