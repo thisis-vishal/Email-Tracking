@@ -21,6 +21,7 @@ from django.template.loader import get_template
 import uuid
 from bson.json_util import dumps, loads 
 from django.urls import reverse
+from django.core.serializers import serialize
 # Create your views here
 
 class SendTemplateMailView(APIView):
@@ -55,13 +56,11 @@ class SendTemplateMailView(APIView):
 class getdata(APIView):
 
     def get(self,request):
-        data=list(emailData.objects.all())
-        
-        for x in data:
-            for j in x:
-                print(j)
+        data = serialize('json', emailData.objects.all())
+    
+            
         print(data)
-        return Response({"data":"realdata"})
+        return Response({"data":data})
 
 
     
