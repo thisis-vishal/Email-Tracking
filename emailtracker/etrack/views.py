@@ -52,7 +52,9 @@ class SendTemplateMailView(APIView):
             return Response({"success":True})
     
 class getdata(APIView):
-    def get(self):
+
+    def get(self,request):
+
         return Response({"data":emailData.objects.get()})
 
 
